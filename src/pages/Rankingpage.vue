@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="knop" @click="goToPage('home')">
+        <button @click="goToPage('home')">
             Go to home
         </button>
         <h1>
@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(song,count) in sortArray(songs)" :key="count">
+                <tr v-for="(song,count) in sortSongs(songs)" :key="count">
                     <td>{{count+1}}</td>
                     <td>{{song.artist.name}}</td>
                     <td>{{song.title}}</td>
@@ -24,93 +24,97 @@
                 </tr>
             </tbody>
         </table>
-        <div class="app">
-            <h2>Bar Chart</h2>
-            <div v-for="(song) in makeBarChart(songs)" :key="song.id">
-
-            </div>
-        </div>
+        <Graphs
+            :items="songsWithPoints"
+        />
     </div>
 </template>
 
 <script>
-export default {
-    name: "Rankingpage",
-    data() {
-        return {
-            songs: [],
-        }
-    },
-    mounted() {
-            this.fetchSongs();
+    //components
+    import Graphs from "../components/Graps.vue";
+    export default {
+        name: "Rankingpage",
+        components: {
+            Graphs
         },
-    methods: {
-        goToPage(page) {
-            this.$emit("change-page",page)
+        data() {
+            return {
+                songs: [],
+                songsWithPoints: [],
+            }
         },
-        // data methods
-        fetchSongs() {
-            // Get all songs
-            const url = "http://webservies.be/eurosong/Songs";
-            fetch(url)
-                .then((response) => {
-                        return response.json();
-                })
-                .then((songs) => {
-                    this.fetchAllSongInformation(songs);
-                });
-        },
-        fetchAllSongInformation(songs) {
-            // Get all artist
-            const url = "http://webservies.be/eurosong/Artists";
-            fetch(url)
-                .then((response) => {
-                    // response is text, so convert to json
-                    return response.json();
-                })
-                .then((artists) => {
-                    // loop over array songs with forEach method
-                    songs.map((song) => {
-                        // find the artist in an array
-                        const artist = artists.find((artist) => artist.id == song.artist);
-                        // replace the id by the artist object
-                        song.artist = artist;
-                        song.vote = 0;
-
-                        // return the new object
-                        return song;
-                    });
-                    // change data of songs, so everything will get rerenderd;
-                    this.songs = songs;
-                })
-                .then(() => {
-                    this.songs.map((song) => {
-                        let songId = song.id;
-                        const url = "http://webservies.be/eurosong/Songs/"+songId+"/points";
-                        fetch(url)
-                        .then((response) => {
-                            // response is text, so convert to json
-                            return response.json();
-                        })
-                        .then((stemmen) => {
-    
-                            song.vote = stemmen;
-                            return song;
-                                
-                        })
-                    });
-                });
+        mounted() {
+                this.fetchSongs();
             },
-            sortArray(songs) {
+        methods: {
+            goToPage(page) {
+                this.$emit("change-page",page)
+            },
+            // data methods
+            fetchSongs() {
+                //Alle songs krijgen
+                const url = "http://webservies.be/eurosong/Songs";
+                fetch(url)
+                    .then((response) => {
+                            return response.json();
+                    })
+                    .then((songs) => {
+                        this.fetchAllSongInformation(songs);
+                    })
+            },
+            fetchAllSongInformation(songs) {
+                let songsWithPoints = [];
+                //Alle artiesten van de songs krijgen
+                const url = "http://webservies.be/eurosong/Artists";
+                fetch(url)
+                    .then((response) => {
+                        //Text omzetten naar json
+                        return response.json();
+                    })
+                    .then((artists) => {
+                        songs.map((song) => {
+                            //Artiest vinden van song
+                            const artist = artists.find((artist) => artist.id == song.artist);
+                            //Vervang het id door het artiest object
+                            song.artist = artist;
+                            song.vote = 0;
+
+                            //Het nieuwe object teruggeven
+                            return song;
+                        });
+                        //Data van liedjes wijzigen zodat alles opnieuw wordt gerenderd
+                        this.songs = songs;
+                    })
+                    .then(() => {
+                        this.songs.map((song) => {
+                            let liedjesMetPunten = [];
+                            let songId = song.id;
+                            const url = "http://webservies.be/eurosong/Songs/"+songId+"/points";
+                            fetch(url)
+                            .then((response) => {
+                                //Text omzetten naar json
+                                return response.json();
+                            })
+                            .then((stemmen) => {
+        
+                                song.vote = stemmen; //Stemmen van liedjes
+                                liedjesMetPunten.push(song.title,song.vote) //Dit heb ik nodig voor mijn grafiek
+                                return song; //Dit geeft alles terug van song --> dus zowel de titel van de song, als de artiest, als de songId en het aantal votes van de song
+                            })
+                            songsWithPoints.push(liedjesMetPunten); //Dit heb ik nodig voor mijn grafiek
+                        });
+                        return songsWithPoints; //Dit geeft de titels van de songs terug samen met het aantal votes van de song
+                    });
+                    this.songsWithPoints = songsWithPoints;
+                },
+            //Songs sorteren voor tabel
+            sortSongs(songs) {
                 const aantal = songs.length;
                 return (aantal,songs.slice().sort(function(a, b) {
                     return b.vote - a.vote;
                 }));
             },
-            makeBarChart(songs)
-            {
-
-            }
+        }
     }
-}
 </script>

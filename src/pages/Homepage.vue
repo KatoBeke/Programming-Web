@@ -4,10 +4,10 @@
             Eurosong voting app!
         </h1>
 
-        <button class="knop" @click="goToPage('game')">
+        <button @click="goToPage('game')">
             Show game
         </button>
-        <button class="knop" @click="goToPage('ranking')">
+        <button @click="goToPage('ranking')">
             Show ranking
         </button>
     </div>

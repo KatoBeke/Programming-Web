@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="knop" @click="goToPage('home')">
+        <button @click="goToPage('home')">
             Go to home
         </button>
         <h1>
@@ -14,7 +14,7 @@
             @change-index="changeActiveSongIndex"
         />
 
-        <div class="knop" v-for="(vote, index) in votes" :key="index" >
+        <div v-for="(vote, index) in votes" :key="index" >
             <button @click="addVote(vote.points)" v-if="!vote.isVoted">
                 Add {{ vote.points}} points
             </button>
@@ -46,11 +46,35 @@
                         isVoted: false
                     },
                     {
+                        points: 3,
+                        isVoted: false
+                    },
+                    {
                         points: 4,
                         isVoted: false
                     },
                     {
+                        points: 5,
+                        isVoted: false
+                    },
+                    {
+                        points: 6,
+                        isVoted: false
+                    },
+                    {
+                        points: 7,
+                        isVoted: false
+                    },
+                    {
                         points: 8,
+                        isVoted: false
+                    },
+                    {
+                        points: 10,
+                        isVoted: false
+                    },
+                    {
+                        points: 12,
                         isVoted: false
                     },
                 ]

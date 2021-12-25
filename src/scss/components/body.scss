@@ -1,14 +1,14 @@
 body {
     background-color: $primary-blue;
     color: $primary-white;
-    margin: 0;
     position: relative;
     left: 20px;
 }
 
 button {
     margin-left: 20px;
-    display: inline-block;
+    margin-top: 5px;
+    font-size: $font-size-buttons;
     &:hover {
         background-color: $primary-blue;
         color: $primary-white;
@@ -22,4 +22,8 @@ table, th, td {
     td {
         text-align: center;
     }
+}
+
+p {
+    font-size: $font-size-p;
 }
