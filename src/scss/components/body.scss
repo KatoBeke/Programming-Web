@@ -2,4 +2,24 @@ body {
     background-color: $primary-blue;
     color: $primary-white;
     margin: 0;
+    position: relative;
+    left: 20px;
+}
+
+button {
+    margin-left: 20px;
+    display: inline-block;
+    &:hover {
+        background-color: $primary-blue;
+        color: $primary-white;
+    }
+}
+
+table, th, td {
+    border: 1.5px solid $primary-black;
+    border-collapse: collapse;
+    width: 500px;
+    td {
+        text-align: center;
+    }
 }
