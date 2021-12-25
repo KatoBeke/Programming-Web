@@ -23,9 +23,9 @@
                     <td>{{song.vote}}</td>
                 </tr>
             </tbody>
-        </table>
+        </table><br><br>
         <Graphs
-            :items="songsWithPoints"
+            :items="sortsongsWithPoints(songsWithPoints)"
         />
     </div>
 </template>
@@ -99,6 +99,7 @@
                             .then((stemmen) => {
         
                                 song.vote = stemmen; //Stemmen van liedjes
+                                
                                 liedjesMetPunten.push(song.title,song.vote) //Dit heb ik nodig voor mijn grafiek
                                 return song; //Dit geeft alles terug van song --> dus zowel de titel van de song, als de artiest, als de songId en het aantal votes van de song
                             })
@@ -108,13 +109,19 @@
                     });
                     this.songsWithPoints = songsWithPoints;
                 },
-            //Songs sorteren voor tabel
+            //Songs descending sorteren voor tabel
             sortSongs(songs) {
                 const aantal = songs.length;
                 return (aantal,songs.slice().sort(function(a, b) {
                     return b.vote - a.vote;
                 }));
             },
+            //Songs descending sorteren voor grafiek
+            sortsongsWithPoints(songsWithPoints) {
+                return songsWithPoints.slice().sort(function(a,b) {
+                    return b[1]-a[1]
+                });
+            }
         }
     }
 </script>

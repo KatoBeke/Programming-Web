@@ -10,8 +10,6 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
-
-
 //ES5 Declaratie variabelen
 /*var firstname = "Collin";
 var name = "Van der Vorst";

@@ -27,3 +27,9 @@ table, th, td {
 p {
     font-size: $font-size-p;
 }
+
+table {
+    position: absolute;
+    top: 60px;
+    right: 500px;
+}
