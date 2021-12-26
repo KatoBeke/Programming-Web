@@ -1,18 +1,18 @@
 <template>
     <div>
-        <button @click="ChangeIndex(-1)">
+        <button class="knoppen" id="vorige" @click="ChangeIndex(-1)">
             Previous song
         </button>
         
         <div v-for="(song,index) in items" :key="song.id">
             <div v-if="index == activeIndex" align="center">
                     <p>{{song.artist.name}} - {{song.title}}</p>
-                <iframe :src="song.spotify" width="80%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                <iframe :src="song.spotify" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
             </div>
         </div>
 
         <div>
-            <button @click="ChangeIndex(1)">
+            <button class="knoppen" id="volgende" @click="ChangeIndex(1)">
                 Next song
             </button>
         </div>

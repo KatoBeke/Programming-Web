@@ -5,7 +5,7 @@ body {
     left: 20px;
 }
 
-button {
+.knoppen {
     margin-left: 20px;
     margin-top: 5px;
     font-size: $font-size-buttons;
@@ -15,21 +15,43 @@ button {
     }
 }
 
-table, th, td {
-    border: 1.5px solid $primary-black;
+#vorige, #volgende {
+    position: absolute;
+    top: 200px;
+}
+
+#vorige {
+    left: 100px;
+}
+
+#volgende {
+    right: 120px;
+}
+
+iframe {
+    width: 70%;
+}
+
+#stemmen {
+    width: 105px;
+    position: relative;
+    top: 50px;
+    left: 46%;
+}
+
+table {
     border-collapse: collapse;
-    width: 500px;
-    td {
-        text-align: center;
+}
+
+table, td, th {
+    border: 1px solid black;
+    width: 800px;
+    text-align: center;
+    th {
+        background-color: blueviolet;
     }
 }
 
 p {
     font-size: $font-size-p;
-}
-
-table {
-    position: absolute;
-    top: 60px;
-    right: 200px;
 }

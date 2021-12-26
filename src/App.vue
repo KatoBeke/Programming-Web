@@ -28,8 +28,6 @@ import Homepage from "./pages/Homepage.vue";
 import Gamepage from "./pages/Gamepage.vue";
 import Rankingpage from "./pages/Rankingpage.vue";
 
-import style from './scss/style.scss';
-
 // App component
 export default {
   name: 'App',
@@ -50,3 +48,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import "./scss/style.scss";
+</style>

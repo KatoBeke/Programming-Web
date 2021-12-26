@@ -1,7 +1,10 @@
 <template>
     <div>
-        <button @click="goToPage('home')">
+        <button class="knoppen" @click="goToPage('home')">
             Go to home
+        </button>
+        <button class="knoppen" @click="goToPage('ranking')">
+            Show ranking
         </button>
         <h1>
             Game
@@ -15,7 +18,7 @@
         />
 
         <div v-for="(vote, index) in votes" :key="index" >
-            <button @click="addVote(vote.points)" v-if="!vote.isVoted">
+            <button class="knoppen" id="stemmen" @click="addVote(vote.points)" v-if="!vote.isVoted">
                 Add {{ vote.points}} points
             </button>
         </div>

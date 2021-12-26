@@ -1,7 +1,10 @@
 <template>
     <div>
-        <button @click="goToPage('home')">
+        <button class="knoppen" @click="goToPage('home')">
             Go to home
+        </button>
+         <button class="knoppen" @click="goToPage('game')">
+            Show game
         </button>
         <h1>
             Top <span> {{songs.length}} </span> songs
@@ -32,7 +35,7 @@
 
 <script>
     //components
-    import Graphs from "../components/Graps.vue";
+    import Graphs from "../components/Graphs.vue";
     export default {
         name: "Rankingpage",
         components: {
@@ -97,31 +100,33 @@
                                 return response.json();
                             })
                             .then((stemmen) => {
-        
                                 song.vote = stemmen; //Stemmen van liedjes
                                 
-                                liedjesMetPunten.push(song.title,song.vote) //Dit heb ik nodig voor mijn grafiek
+                                liedjesMetPunten.push(song.title,song.vote) //Dit heb ik nodig voor mijn grafiek (Totaal aantal votes per song)
                                 return song; //Dit geeft alles terug van song --> dus zowel de titel van de song, als de artiest, als de songId en het aantal votes van de song
                             })
-                            songsWithPoints.push(liedjesMetPunten); //Dit heb ik nodig voor mijn grafiek
+                            songsWithPoints.push(liedjesMetPunten); //Dit heb ik nodig voor mijn grafiek (Totaal aantal votes per song)
                         });
                         return songsWithPoints; //Dit geeft de titels van de songs terug samen met het aantal votes van de song
                     });
                     this.songsWithPoints = songsWithPoints;
+                    
                 },
             //Songs descending sorteren voor tabel
             sortSongs(songs) {
+                let gesorteerd = songs.slice().sort((a,b) => b.vote - a.vote);
+                let sorted = JSON.parse(JSON.stringify(gesorteerd));
+
                 const aantal = songs.length;
-                return (aantal,songs.slice().sort(function(a, b) {
-                    return b.vote - a.vote;
-                }));
+                
+                return (aantal,sorted);
             },
-            //Songs descending sorteren voor grafiek
+            //Songs descending sorteren voor grafiek (Totaal aantal votes per song)
             sortsongsWithPoints(songsWithPoints) {
                 return songsWithPoints.slice().sort(function(a,b) {
                     return b[1]-a[1]
                 });
-            }
-        }
+            },
     }
+}
 </script>
