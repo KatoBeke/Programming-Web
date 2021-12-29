@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueWordCloud from 'vuewordcloud';
 import {Chart} from 'chart.js'
 import Chartkick from 'vue-chartkick'
 Vue.use(Chartkick.use(Chart));
 
 Vue.config.productionTip = false
+
+Vue.component(VueWordCloud.name, VueWordCloud);
 
 new Vue({
   render: h => h(App),
